@@ -1,0 +1,35 @@
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+USE `mydb` ;
+
+-- -----------------------------------------------------
+-- Table `mydb`.`Cadastros`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`Cadastros` (
+  `RG` VARCHAR(9) NOT NULL,
+  `nome` VARCHAR(45) NULL,
+  `sobrenome` VARCHAR(45) NULL,
+  `empresa` VARCHAR(45) NULL,
+  `Foto` LONGBLOB NULL,
+  `idVisitantes` INT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`RG`),
+	KEY(`idVisitantes`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`Visitas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`Visitas` (
+  `idVisita` INT NOT NULL AUTO_INCREMENT,
+  `entrada` DATETIME NULL,
+  `saida` DATETIME NULL,
+  `motivo` VARCHAR(45) NULL,
+  `Cadastros_RG` VARCHAR(9) NOT NULL,
+  PRIMARY KEY (`idVisita`, `Cadastros_RG`),
+  INDEX `fk_Visitas_Cadastros_idx` (`Cadastros_RG` ASC),
+  CONSTRAINT `fk_Visitas_Cadastros`
+    FOREIGN KEY (`Cadastros_RG`)
+    REFERENCES `mydb`.`Cadastros` (`RG`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;

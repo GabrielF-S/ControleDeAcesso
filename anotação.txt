@@ -1,0 +1,17 @@
+require("conexao.php");
+	executarBanco($strcon, $sql);
+header('Location: index.php');
+
+
+	$strcon =mysqli_connect('localhost:3307','root','usbw','mydb') or die(' Erro ao conectar com o Banco de Dados');
+	$id_imagem = $_GET[‘codigo’];
+	$querySelecionaPorCodigo = "SELECT codigo, imagem FROM tabela_imagens WHERE codigo = $id_imagem";
+	$resultado = mysql_query($querySelecionaPorCodigo);
+	$imagem = mysql_fetch_object($resultado);
+	Header( "Content-type: image/gif");
+ 	echo $imagem->imagem;
+
+	header('Location: ver_imagem.php');
+     
+
+?>
